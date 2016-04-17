@@ -44,7 +44,7 @@ void lcd(void)
 	SPI3->SSR.SSR = 0;
 }
 
-void light(void)
+void backlight(void)
 {
 	GPIOD->DOUT &= ~(1<<14);
 }
@@ -79,7 +79,7 @@ void setpaca(unsigned char pa, unsigned char ca)
 	SPI3->SSR.SSR = 0;
 }
 
-void wordlcd(unsigned char x, unsigned char y, unsigned char asciiword)
+void word(unsigned char x, unsigned char y, unsigned char asciiword)
 {
 	int i = 0, k = 0;
 	unsigned char temp;
@@ -98,18 +98,18 @@ void wordlcd(unsigned char x, unsigned char y, unsigned char asciiword)
 	}
 }
 
-void printlcd(unsigned char line, char *str)
+void text(unsigned char line, char *str)
 {
 	int i = 0;
 	do {
-		wordlcd(line, i, *str++);
+		word(line, i, *str++);
 		i++;
 		if(i>15)
 			break;
 	} while(*str!='\0');
 }
 
-void clrlcd(void)
+void clear(void)
 {
 	int i = 0;
 	setpaca(0x00, 0x00);
